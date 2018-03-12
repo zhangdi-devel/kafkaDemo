@@ -14,16 +14,13 @@
  *    limitations under the License.
  */
 
-package com.sanchez.coding_challenge
+package org.dizhang.kafkaDemo
 
-import com.datastax.driver.core.Session
-import org.apache.kafka.streams.kstream.ForeachAction
+import org.apache.kafka.streams.kstream.Reducer
 import spire.math.Number
 
-class UpdateCassandra(val session: Session) extends ForeachAction[String, Number] {
-
-  override def apply(key: String, value: Number): Unit = {
-    session.execute(s"insert into sums ( tid, num ) values ( now() , ${value.toDouble} ) ")
+object AddNumber extends Reducer[Number] {
+  override def apply(value1: Number, value2: Number): Number = {
+    value1 + value2
   }
-
 }

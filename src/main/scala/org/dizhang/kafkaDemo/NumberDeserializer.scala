@@ -14,12 +14,22 @@
  *    limitations under the License.
  */
 
-package com.sanchez.coding_challenge
-import org.apache.kafka.streams.kstream.Predicate
+package org.dizhang.kafkaDemo
+
+import java.util
+import org.apache.kafka.common.serialization.Deserializer
 import spire.math.Number
 
-object IsPositive extends Predicate[String, Number] {
-  override def test(key: String, value: Number): Boolean = {
-    value > 0
+class NumberDeserializer extends Deserializer[Number] {
+  override def configure(configs: util.Map[String, _], isKey: Boolean): Unit = {}
+
+  override def close(): Unit = {}
+
+  override def deserialize(topic: String, data: Array[Byte]): Number = {
+    if (data == null) {
+      null
+    } else {
+      Number(data.map(_.toChar).mkString.toDouble)
+    }
   }
 }

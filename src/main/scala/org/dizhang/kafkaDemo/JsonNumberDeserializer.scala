@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package com.sanchez.coding_challenge
+package org.dizhang.kafkaDemo
 
 import java.io.{ByteArrayInputStream, InputStreamReader}
 import java.util

@@ -14,14 +14,16 @@
  *    limitations under the License.
  */
 
-package com.sanchez.coding_challenge
+package org.dizhang.kafkaDemo
 
-import org.scalatest._
-import org.slf4j.{Logger, LoggerFactory}
+import com.datastax.driver.core.Session
+import org.apache.kafka.streams.kstream.ForeachAction
+import spire.math.Number
 
-class UnitSpec extends FlatSpec with Matchers with
-  OptionValues with Inside with Inspectors {
+class UpdateCassandra(val session: Session) extends ForeachAction[String, Number] {
 
-  def logger: Logger = LoggerFactory.getLogger(getClass)
+  override def apply(key: String, value: Number): Unit = {
+    session.execute(s"insert into sums ( tid, num ) values ( now() , ${value.toDouble} ) ")
+  }
 
 }

@@ -14,13 +14,14 @@
  *    limitations under the License.
  */
 
-package com.sanchez.coding_challenge
+package org.dizhang.kafkaDemo
 
-import org.apache.kafka.streams.kstream.Reducer
-import spire.math.Number
+import org.scalatest._
+import org.slf4j.{Logger, LoggerFactory}
 
-object AddNumber extends Reducer[Number] {
-  override def apply(value1: Number, value2: Number): Number = {
-    value1 + value2
-  }
+class UnitSpec extends FlatSpec with Matchers with
+  OptionValues with Inside with Inspectors {
+
+  def logger: Logger = LoggerFactory.getLogger(getClass)
+
 }

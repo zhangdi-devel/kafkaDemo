@@ -14,20 +14,13 @@
  *    limitations under the License.
  */
 
-package com.sanchez.coding_challenge
+package org.dizhang.kafkaDemo
+
+import org.apache.kafka.streams.kstream.Predicate
 import spire.math.Number
-class JsonNumberDeserializerSpec extends UnitSpec {
-  private val des = new JsonNumberDeserializer
 
-  implicit class SerializedJson(json: String) {
-    def toByteArray: Array[Byte] = {
-      json.toCharArray.map(_.toByte)
-    }
-  }
-
-  "A JsonNumberDeserializer" should "deserialize JSON" in {
-    val test = """{"a": 1, "b": 2.0, "c"}"""
-
-    logger.info("test:" + des.deserialize("", test.toByteArray).mkString(","))
+object IsPositive extends Predicate[String, Number] {
+  override def test(key: String, value: Number): Boolean = {
+    value > 0
   }
 }

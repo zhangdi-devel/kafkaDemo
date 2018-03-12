@@ -14,7 +14,8 @@
  *    limitations under the License.
  */
 
-package com.sanchez.coding_challenge
+package org.dizhang.kafkaDemo
+
 import java.util.Properties
 import java.util.concurrent.TimeUnit
 import org.apache.kafka.clients.consumer.ConsumerConfig

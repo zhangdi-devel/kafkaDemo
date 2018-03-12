@@ -14,22 +14,21 @@
  *    limitations under the License.
  */
 
-package com.sanchez.coding_challenge
+package org.dizhang.kafkaDemo
 
-import java.util
-import org.apache.kafka.common.serialization.Deserializer
 import spire.math.Number
+class JsonNumberDeserializerSpec extends UnitSpec {
+  private val des = new JsonNumberDeserializer
 
-class NumberDeserializer extends Deserializer[Number] {
-  override def configure(configs: util.Map[String, _], isKey: Boolean): Unit = {}
-
-  override def close(): Unit = {}
-
-  override def deserialize(topic: String, data: Array[Byte]): Number = {
-    if (data == null) {
-      null
-    } else {
-      Number(data.map(_.toChar).mkString.toDouble)
+  implicit class SerializedJson(json: String) {
+    def toByteArray: Array[Byte] = {
+      json.toCharArray.map(_.toByte)
     }
+  }
+
+  "A JsonNumberDeserializer" should "deserialize JSON" in {
+    val test = """{"a": 1, "b": 2.0, "c"}"""
+
+    logger.info("test:" + des.deserialize("", test.toByteArray).mkString(","))
   }
 }

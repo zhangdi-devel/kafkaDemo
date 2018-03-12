@@ -14,18 +14,25 @@
  *    limitations under the License.
  */
 
-package com.sanchez.coding_challenge
+package org.dizhang.kafkaDemo
 
 import java.util
+
 import org.apache.kafka.common.serialization.Serializer
 import spire.math.Number
 
-class NumberSerializer extends Serializer[Number] {
+/**
+  * A very naive serializer
+  * */
+class JsonNumberSerializer extends Serializer[List[Number]] {
   override def configure(configs: util.Map[String, _], isKey: Boolean): Unit = {}
 
   override def close(): Unit = {}
 
-  override def serialize(topic: String, data: Number): Array[Byte] = {
-    data.toString.toCharArray.map(_.toByte)
+  override def serialize(topic: String, data: List[Number]): Array[Byte] = {
+    data match {
+      case Nil => Array[Byte]()
+      case head :: tail => s"""\"dummy\": $head""".toCharArray.map(_.toByte) ++ serialize(topic, tail)
+    }
   }
 }
